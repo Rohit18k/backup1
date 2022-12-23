@@ -31,7 +31,7 @@ public class CreateSubscription extends TestBase1{
 		initialization1();
 	}
 
-	
+
 	  @Test(priority=1)
 	     public void  createSubscription() throws Exception {
 	         Thread.sleep(5000);
@@ -46,8 +46,17 @@ public class CreateSubscription extends TestBase1{
 	       actn.moveToElement(driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[1]/a[3]/span"))).click().build().perform();
 	       
 	       Thread.sleep(5000);
+	       
+	       Actions actn11= new Actions(driver);
+	       actn11.moveToElement(driver.findElement(By.xpath("//button[contains(text(),'Next')]"))).click().build().perform();
 			 
    
+	       String actual3= "Plan selection is required";
+			String expected3=driver.findElement(By.xpath("//span[@class='error ng-star-inserted']")).getText();
+			System.out.println(expected3);
+			Assert.assertEquals(actual3, expected3);
+			
+	    
 	       Actions actn1= new Actions(driver);
 	       actn1.moveToElement(driver.findElement(By.xpath("//*[@id=\"plan_type\" or @name=\"plan_type\"]"))).click().build().perform();
 
@@ -72,12 +81,25 @@ public class CreateSubscription extends TestBase1{
 			 WebElement element = wait.until(ExpectedConditions.elementToBeClickable(element11)); 
 			 ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
 
+			 
+			 
+			 WebElement element2 =    driver.findElement(By.xpath("//button[contains(text(),'Next')]"));
+			
+			 element2.click();
+			 
+			 String actual2= "User selection is required";
+				String expected2=driver.findElement(By.xpath("//span[@class='error custom-error-margin ng-star-inserted']")).getText();
+				System.out.println(expected2);
+				Assert.assertEquals(actual2, expected2);
+			 
+			 
+			 
 			 WebElement element3 =    driver.findElement(By.xpath("//input[@placeholder='Search user']"));
 			  ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element3);  
 		   
 			  Thread.sleep(1000);
 			  
-			  element3.sendKeys(pro.getProperty("User"));
+			  element3.sendKeys(pro.getProperty("User2"));
 		
 
 		Thread.sleep(2000);
@@ -87,6 +109,15 @@ public class CreateSubscription extends TestBase1{
 		act.sendKeys(Keys.ENTER).perform();
 	
 		
+		 driver.findElement(By.xpath("//button[contains(text(),'Next')]")).click();
+		 
+		 
+		 
+			String actual431= "Pet selection is required";
+			String expected431=driver.findElement(By.xpath("//span[contains(text(),'Pet selection is required')]")).getText();
+			System.out.println(expected431);
+			Assert.assertEquals(actual431, expected431);
+		 
 		 
 		 
 		 WebElement element21 =    driver.findElement(By.xpath("//*[@id=\"pet_selection\"]"));
@@ -100,7 +131,7 @@ public class CreateSubscription extends TestBase1{
 	    	
 	    	Thread.sleep(4000);
 	    	
-	    	doSelectByVisibleText(opt3,pro.getProperty("Pet"));
+	    	doSelectByVisibleText(opt3,pro.getProperty("Pet1"));
 		 
 
 		 
@@ -126,10 +157,11 @@ public class CreateSubscription extends TestBase1{
 		 
 		 action21.moveToElement(driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/app-create-subscription/div[2]/div/div/div/div/div[5]/address/button/span[1]"))).click().build().perform();
 		 	
+		 
 	}
-	  
 
-	  @Test(priority=2)
+
+  @Test(priority=2)
 	     public void subscriptionDetails() throws Exception {
 	         Thread.sleep(5000);
 
@@ -169,14 +201,14 @@ public class CreateSubscription extends TestBase1{
 			   
 		   driver.findElement(By.xpath("//input[@name=\"search\"] ")).clear();
 		   Thread.sleep(1000);
-		   driver.findElement(By.xpath("//input[@name=\"search\"] ")).sendKeys(pro.getProperty("Subscriber"));
+		   driver.findElement(By.xpath("//input[@name=\"search\"] ")).sendKeys(pro.getProperty("Customer"));
 			   
 		   driver.findElement(By.xpath("//span[@class=\"input-group-text fa fa-search cursor\"]")).click();
 			   
 		   driver.findElement(By.xpath("//input[@name=\"search\"] ")).clear();
 		   
 		   Thread.sleep(1000);
-		   driver.findElement(By.xpath("//input[@name=\"search\"] ")).sendKeys(pro.getProperty("Petname"));
+		   driver.findElement(By.xpath("//input[@name=\"search\"] ")).sendKeys(pro.getProperty("PetName"));
 		   
 		   
 		   driver.findElement(By.xpath("//span[@class=\"input-group-text fa fa-search cursor\"]")).click();
@@ -305,14 +337,998 @@ for(WebElement el6: PaymentHistory) {
 List<WebElement>	rowdata= driver.findElements(By.xpath("//*[@id=\"first-table\"]/tbody/tr[1]"));
 for(WebElement el7: rowdata) {
 	System.out.println(el7.getText());
-	if(el7.getText().equals(pro.getProperty("Amount1"))) {
+	if(el7.getText().equals(pro.getProperty("Amount2"))) {
 		Boolean	status6=true;
 			break;
 		}	
 	
 }	   
-	  }
-	  
+  } 
 
-	  
+
+@Test(priority=3)
+public void upgradeSubscription() throws Exception {
+ 
+ 	   Thread.sleep(5000);
+ 	   
+       File src=new File("./src/main/java/com/wellness/qa/config/config.properties");
+	     	FileInputStream fis=new FileInputStream(src);
+	     	Properties pro=new  Properties();
+	     	pro=new Properties();
+	     	pro.load(fis);
+	     	
+	 driver.navigate().to("http://wellness.projectdemo.us/admin/dashboard");
+	 
+	 Thread.sleep(5000);
+	 
+Actions action3= new Actions(driver);
+	 
+action3.moveToElement(driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[6]/a"))).click().build().perform();
+
+Thread.sleep(5000);
+
+
+driver.findElement(By.xpath("//table[1]/tbody[1]/tr[1]/td[7]/a[1]")).click();
+
+Thread.sleep(5000);
+
+Actions action4= new Actions(driver);
+
+action4.moveToElement(driver.findElement(By.xpath("//*[@id=\"PlanDetails\"]/div[1]/div/a[contains(text(),'Upgrade Plan')]"))).click().build().perform();
+    
+Thread.sleep(2000);
+
+String actual= "Upgrade Subscription";
+		String expected=driver.findElement(By.xpath("//h3[contains(text(),'Upgrade Subscription')]")).getText();
+		System.out.println(expected);
+		Assert.assertEquals(actual, expected);
+		
+		
+WebElement paynow= driver.findElement(By.xpath("//button[1]/span[contains(text(),'Pay Now')]"));
+		
+Actions action6= new Actions(driver);
+
+action6.moveToElement(paynow).click().build().perform();
+
+
+String actual1= "Plan selection is required!!";
+String expected1=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(expected1);
+Assert.assertEquals(actual1, expected1);
+
+JavascriptExecutor j = (JavascriptExecutor) driver;
+j.executeScript("window.scrollBy(0,-800)");
+
+
+List<WebElement>	currentplandetails= driver.findElements(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[3]/div[1]"));
+for(WebElement el1: currentplandetails) {
+	System.out.println(el1.getText());
+	
+	if(el1.getText().equals(pro.getProperty("Amount3"))) {
+	Boolean	status7=true;
+		break;
+	}
+}
+
+
+WebElement upgradeplan= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[2]/div/div/div/select[@name='plan']"));
+
+
+Actions action5= new Actions(driver);
+
+action5.moveToElement(upgradeplan).click().build().perform();
+
+upgradeplan.sendKeys(Keys.ARROW_DOWN);
+
+upgradeplan.sendKeys(Keys.ENTER);
+
+Thread.sleep(2000);
+
+List<WebElement>	upgradeplandetails= driver.findElements(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[3]/div[2]"));
+for(WebElement el1: upgradeplandetails) {
+	System.out.println(el1.getText());
+	
+	if(el1.getText().equals(pro.getProperty("Amount4"))) {
+	Boolean	status7=true;
+		break;
+	}
+}
+
+action6.moveToElement(paynow).click().build().perform();
+
+String actual2= "Note is required!!";
+String expected2=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(expected2);
+Assert.assertEquals(actual2, expected2);
+
+
+Thread.sleep(1000);
+
+WebElement textarea= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[4]/div[2]/textarea"));
+
+Actions action7= new Actions(driver);
+
+action7.moveToElement(textarea).click().build().perform();
+
+
+textarea.sendKeys(pro.getProperty("Features"));
+
+
+action6.moveToElement(paynow).click().build().perform();
+
+Thread.sleep(2000);
+String actual10= "Payment Mode is required!!";
+String expected10=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(expected10);
+Assert.assertEquals(actual10, expected10);
+
+Thread.sleep(1000);
+
+WebElement paymentmode = driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[5]/div[1]/select"));
+
+
+Actions action8 = new Actions(driver);
+
+action8.moveToElement(paymentmode).click().build().perform();
+
+Select slt212=new Select(paymentmode);
+slt212.selectByVisibleText(pro.getProperty("PaymentType"));
+
+
+//paymentmode.sendKeys(Keys.ARROW_DOWN);
+//paymentmode.sendKeys(Keys.ARROW_DOWN);
+//paymentmode.sendKeys(Keys.ARROW_DOWN);
+//paymentmode.sendKeys(Keys.ENTER);
+
+WebElement paymenttype = driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[5]/div[2]/select"));
+
+
+Actions action9= new Actions(driver);
+
+action9.moveToElement(paymenttype).click().build().perform();
+
+
+paymenttype.sendKeys(Keys.ARROW_DOWN);
+paymenttype.sendKeys(Keys.ENTER);
+
+
+Thread.sleep(1000);
+
+
+JavascriptExecutor js = (JavascriptExecutor) driver;  
+
+WebElement inpElement = driver.findElement(By.xpath("//input[@type=\"text\"  and @name=\"extra_charge_amount\"]"));
+String actualtext = (String) js.executeScript("return arguments[0].value", inpElement);;
+
+System.out.println(actualtext);
+
+String expectedtext= pro.getProperty("Extracharge");
+
+Assert.assertEquals(actualtext, expectedtext);
+
+paynow.click();
+
+
+try {
+	Thread.sleep(5000);
+String text61=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(text61);
+String exp61="Plan Upgraded successfully";
+Assert.assertEquals(text61,exp61);
+}
+catch(Exception e) {
+	e.printStackTrace();
+}
+}
+
+	
+@Test(priority=4)
+public void upgradeDetails() throws Exception {
+
+	 Thread.sleep(5000);
+	   
+     File src=new File("./src/main/java/com/wellness/qa/config/config.properties");
+	     	FileInputStream fis=new FileInputStream(src);
+	     	Properties pro=new  Properties();
+	     	pro=new Properties();
+	     	pro.load(fis);
+	     	
+	 driver.navigate().to("http://wellness.projectdemo.us/admin/dashboard");
+	 
+	 Thread.sleep(5000);
+	 
+Actions action3= new Actions(driver);
+	 
+action3.moveToElement(driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[6]/a"))).click().build().perform();
+
+Thread.sleep(5000);
+
+
+driver.findElement(By.xpath("//table[1]/tbody[1]/tr[1]/td[7]/a[1]")).click();
+
+Thread.sleep(5000);
+	
+Actions action4= new Actions(driver);
+
+action4.moveToElement(driver.findElement(By.xpath("//button[contains(text(),'Payment History')]"))).click().build().perform();
+
+
+
+List<WebElement>	PaymentHistory= driver.findElements(By.xpath("//*[@id=\"first-table\"]/thead"));
+for(WebElement el6: PaymentHistory) {
+	System.out.println(el6.getText());
+}
+	
+	
+List<WebElement>	rowdata= driver.findElements(By.xpath("//*[@id=\"first-table\"]/tbody/tr[1]"));
+for(WebElement el7: rowdata) {
+	System.out.println(el7.getText());
+	if(el7.getText().equals(pro.getProperty("TransactionType"))) {
+		Boolean	status6=true;
+			break;
+		}	
+	
+}	   
+
+	  }
+
+
+
+@Test(priority=5)
+public void upgradeReport() throws Exception {
+ 
+ 	   Thread.sleep(5000);
+ 	   
+       File src=new File("./src/main/java/com/wellness/qa/config/config.properties");
+	     	FileInputStream fis=new FileInputStream(src);
+	     	Properties pro=new  Properties();
+	     	pro=new Properties();
+	     	pro.load(fis);
+	     	
+	 driver.navigate().to("http://wellness.projectdemo.us/admin/dashboard");
+	 
+	 Thread.sleep(5000);
+	 
+	 WebElement element = driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[30]/a/span[contains(text(),'Reports')]"));
+	 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	 
+	 element.click();
+	 
+
+Thread.sleep(2000);
+
+
+driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[30]/ul/li[1]/a/span[contains(text(),'Payment Report')]")).click();
+
+Thread.sleep(5000);
+
+
+
+Actions action4= new Actions(driver);
+
+action4.moveToElement(driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[1]/div/input"))).click().build().perform();
+
+
+Thread.sleep(2000);
+
+List<WebElement> lst=	driver.findElements(By.xpath("//div[@class=\"md-drppicker drops-down-right ltr shown double show-ranges\"]/div/ul/li"));
+
+for(WebElement el: lst) {
+	Thread.sleep(2000);
+	lst.get(3).click();
+	break;
+}
+	
+Thread.sleep(2000);
+
+WebElement action= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[2]/div/select"));
+
+action.click();
+
+Select slt=new Select(action);
+slt.selectByVisibleText(pro.getProperty("Action1"));
+
+
+Thread.sleep(2000);
+
+WebElement transactionmode= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[3]/select"));
+
+transactionmode.click();
+
+Select slt1=new Select(transactionmode);
+slt1.selectByVisibleText(pro.getProperty("TransactionMode1"));
+
+
+Thread.sleep(2000);
+
+driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[4]/button[2]")).click();
+
+
+((JavascriptExecutor) driver).executeScript("window.scrollBy(0,500)");
+
+} 
+
+
+
+@Test(priority=6)
+public void downgradeSubscription() throws Exception {
+ 
+ 	   Thread.sleep(5000);
+ 	   
+       File src=new File("./src/main/java/com/wellness/qa/config/config.properties");
+	     	FileInputStream fis=new FileInputStream(src);
+	     	Properties pro=new  Properties();
+	     	pro=new Properties();
+	     	pro.load(fis);
+	     	
+	 driver.navigate().to("http://wellness.projectdemo.us/admin/dashboard");
+	 
+	 Thread.sleep(5000);
+	 
+Actions action3= new Actions(driver);
+	 
+action3.moveToElement(driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[6]/a"))).click().build().perform();
+
+Thread.sleep(5000);
+
+
+driver.findElement(By.xpath("//table[1]/tbody[1]/tr[1]/td[7]/a[1]")).click();
+
+Thread.sleep(5000);
+
+Actions action4= new Actions(driver);
+
+action4.moveToElement(driver.findElement(By.xpath("//*[@id=\"PlanDetails\"]/div[1]/div/a[contains(text(),'Downgrade Plan')]"))).click().build().perform();
+
+Thread.sleep(2000);
+
+String actual= "Downgrade Subscription";
+		String expected=driver.findElement(By.xpath("//h3[contains(text(),'Downgrade Subscription')]")).getText();
+		System.out.println(expected);
+		Assert.assertEquals(actual, expected);
+		
+		
+WebElement paynow= driver.findElement(By.xpath("//button[1]/span[contains(text(),'Pay Now')]"));
+		
+Actions action6= new Actions(driver);
+
+action6.moveToElement(paynow).click().build().perform();
+
+
+String actual1= "Plan selection is required!!";
+String expected1=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(expected1);
+Assert.assertEquals(actual1, expected1);
+
+JavascriptExecutor j = (JavascriptExecutor) driver;
+j.executeScript("window.scrollBy(0,-800)");
+
+
+List<WebElement>	activeplandetails= driver.findElements(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[3]/div[1]"));
+for(WebElement el1: activeplandetails) {
+	System.out.println(el1.getText());
+	
+	if(el1.getText().equals(pro.getProperty("Amount5"))) {
+	Boolean	status7=true;
+		break;
+	}
+}
+
+
+WebElement downgradeplan= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[2]/div/div/div/select[@name='plan']"));
+
+
+Actions action5= new Actions(driver);
+
+action5.moveToElement(downgradeplan).click().build().perform();
+
+downgradeplan.sendKeys(Keys.ARROW_DOWN);
+
+downgradeplan.sendKeys(Keys.ENTER);
+
+Thread.sleep(2000);
+
+List<WebElement>	downgradeplandetails= driver.findElements(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[3]/div[2]"));
+for(WebElement el1: downgradeplandetails) {
+	System.out.println(el1.getText());
+	
+	if(el1.getText().equals(pro.getProperty("Amount6"))) {
+	Boolean	status7=true;
+		break;
+	}
+}
+
+action6.moveToElement(paynow).click().build().perform();
+
+Thread.sleep(2000);
+
+String actual2= "Note is required!!";
+String expected2=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(expected2);
+Assert.assertEquals(actual2, expected2);
+
+
+Thread.sleep(1000);
+
+WebElement textarea= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[4]/div/textarea"));
+
+Actions action7= new Actions(driver);
+
+action7.moveToElement(textarea).click().build().perform();
+
+
+textarea.sendKeys(pro.getProperty("Features1"));
+
+
+action6.moveToElement(paynow).click().build().perform();
+
+//Thread.sleep(5000);
+//String actual10= "Payment Mode is required!!";
+//String expected10=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+//System.out.println(expected10);
+//Assert.assertEquals(actual10, expected10);
+
+Thread.sleep(2000);
+
+WebElement paymentmode = driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[5]/div[1]/select"));
+
+Actions action8 = new Actions(driver);
+
+action8.moveToElement(paymentmode).click().build().perform();
+
+Select slt212=new Select(paymentmode);
+slt212.selectByVisibleText(pro.getProperty("PaymentType1"));
+
+Thread.sleep(1000);
+
+
+JavascriptExecutor js = (JavascriptExecutor) driver;  
+
+WebElement inpElement = driver.findElement(By.xpath("//input[@type=\"text\"  and @name=\"extra_charge_amount\"]"));
+String actualtext = (String) js.executeScript("return arguments[0].value", inpElement);;
+
+System.out.println(actualtext);
+
+String expectedtext= pro.getProperty("Extracharge1");
+
+Assert.assertEquals(actualtext, expectedtext);
+
+paynow.click();
+
+
+try {
+	Thread.sleep(5000);
+String text61=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(text61);
+String exp61="Plan Downgraded successfully";
+Assert.assertEquals(text61,exp61);
+}
+catch(Exception e) {
+	e.printStackTrace();
+}
+}
+
+
+@Test(priority=7)
+public void downgradeReport() throws Exception {
+ 
+ 	   Thread.sleep(5000);
+ 	   
+       File src=new File("./src/main/java/com/wellness/qa/config/config.properties");
+	     	FileInputStream fis=new FileInputStream(src);
+	     	Properties pro=new  Properties();
+	     	pro=new Properties();
+	     	pro.load(fis);
+	     	
+	 driver.navigate().to("http://wellness.projectdemo.us/admin/dashboard");
+	 
+	 Thread.sleep(5000);
+	 
+	 WebElement element = driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[30]/a/span[contains(text(),'Reports')]"));
+	 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	 
+	 element.click();
+	 
+
+Thread.sleep(2000);
+
+
+driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[30]/ul/li[1]/a/span[contains(text(),'Payment Report')]")).click();
+
+Thread.sleep(5000);
+
+
+
+Actions action4= new Actions(driver);
+
+action4.moveToElement(driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[1]/div/input"))).click().build().perform();
+
+
+Thread.sleep(2000);
+
+List<WebElement> lst=	driver.findElements(By.xpath("//div[@class=\"md-drppicker drops-down-right ltr shown double show-ranges\"]/div/ul/li"));
+
+for(WebElement el: lst) {
+	Thread.sleep(2000);
+	lst.get(3).click();
+	break;
+}
+	
+Thread.sleep(2000);
+
+WebElement action= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[2]/div/select"));
+
+action.click();
+
+Select slt=new Select(action);
+slt.selectByVisibleText(pro.getProperty("Action2"));
+
+
+Thread.sleep(2000);
+
+WebElement transactionmode= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[3]/select"));
+
+transactionmode.click();
+
+Select slt1=new Select(transactionmode);
+slt1.selectByVisibleText(pro.getProperty("TransactionMode2"));
+
+
+Thread.sleep(2000);
+
+driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[4]/button[2]")).click();
+
+
+((JavascriptExecutor) driver).executeScript("window.scrollBy(0,500)");
+
+} 
+
+@Test(priority=8)
+public void changeSubscription() throws Exception {
+ 
+ 	   Thread.sleep(5000);
+ 	   
+       File src=new File("./src/main/java/com/wellness/qa/config/config.properties");
+	     	FileInputStream fis=new FileInputStream(src);
+	     	Properties pro=new  Properties();
+	     	pro=new Properties();
+	     	pro.load(fis);
+	     	
+	 driver.navigate().to("http://wellness.projectdemo.us/admin/dashboard");
+	 
+	 Thread.sleep(5000);
+	 
+Actions action3= new Actions(driver);
+	 
+action3.moveToElement(driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[6]/a"))).click().build().perform();
+
+Thread.sleep(5000);
+
+
+driver.findElement(By.xpath("//table[1]/tbody[1]/tr[1]/td[7]/a[1]")).click();
+
+Thread.sleep(5000);
+
+Actions action4= new Actions(driver);
+
+action4.moveToElement(driver.findElement(By.xpath("//*[@id=\"PlanDetails\"]/div[1]/div/a[contains(text(),'Change Plan')]"))).click().build().perform();
+    
+Thread.sleep(2000);
+
+String actual= "Change Subscription";
+		String expected=driver.findElement(By.xpath("//h3[contains(text(),'Change Subscription')]")).getText();
+		System.out.println(expected);
+		Assert.assertEquals(actual, expected);
+		
+		
+WebElement paynow= driver.findElement(By.xpath("//button[1]/span[contains(text(),'Pay Now')]"));
+		
+Actions action6= new Actions(driver);
+
+action6.moveToElement(paynow).click().build().perform();
+
+
+String actual1= "New Plan is required!!";
+String expected1=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(expected1);
+Assert.assertEquals(actual1, expected1);
+
+JavascriptExecutor j = (JavascriptExecutor) driver;
+j.executeScript("window.scrollBy(0,-800)");
+
+
+List<WebElement>	currentplandetails= driver.findElements(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[3]/div[1]"));
+for(WebElement el1: currentplandetails) {
+	System.out.println(el1.getText());
+	
+	if(el1.getText().equals(pro.getProperty("Amount7"))) {
+	Boolean	status7=true;
+		break;
+	}
+}
+
+
+WebElement changeplan= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[2]/div/div/div/select[@name='plan']"));
+
+
+Actions action5= new Actions(driver);
+
+action5.moveToElement(changeplan).click().build().perform();
+
+changeplan.sendKeys(Keys.ARROW_DOWN);
+
+changeplan.sendKeys(Keys.ENTER);
+
+Thread.sleep(2000);
+
+List<WebElement>	changeplandetails= driver.findElements(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[3]/div[2]"));
+for(WebElement el1: changeplandetails) {
+	System.out.println(el1.getText());
+	
+	if(el1.getText().equals(pro.getProperty("Amount8"))) {
+	Boolean	status8=true;
+		break;
+	}
+}
+
+List<WebElement>	currentsubscriptiondetails= driver.findElements(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[4]/div/div/div/div[1]"));
+
+for(WebElement el1: currentsubscriptiondetails) {
+	System.out.println(el1.getText());
+	
+	if(el1.getText().equals(pro.getProperty("CurrentAmount"))) {
+	Boolean	status9=true;
+		break;
+	}
+}
+
+
+List<WebElement>	newsubscriptiondetails= driver.findElements(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[4]/div/div/div/div[2]"));
+
+for(WebElement el1: newsubscriptiondetails) {
+	System.out.println(el1.getText());
+	
+	if(el1.getText().equals(pro.getProperty("NewAmount"))) {
+	Boolean	status10=true;
+		break;
+	}
+}
+
+Thread.sleep(2000);
+
+driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[5]/div/div/div/div[1]/div/div/div/div[2]/button")).click();
+
+
+action6.moveToElement(paynow).click().build().perform();
+
+Thread.sleep(2000);
+
+String actual2= "Note is required!!";
+String expected2=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(expected2);
+Assert.assertEquals(actual2, expected2);
+
+Thread.sleep(1000);
+
+WebElement textarea= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[6]/div/textarea"));
+
+Actions action7= new Actions(driver);
+
+action7.moveToElement(textarea).click().build().perform();
+
+
+textarea.sendKeys(pro.getProperty("Features2"));
+
+
+action6.moveToElement(paynow).click().build().perform();
+
+Thread.sleep(2000);
+String actual10= "Payment Mode is required!!";
+String expected10=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(expected10);
+Assert.assertEquals(actual10, expected10);
+
+Thread.sleep(1000);
+
+WebElement paymentmode = driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[7]/div[1]/select"));
+
+
+Actions action8 = new Actions(driver);
+
+action8.moveToElement(paymentmode).click().build().perform();
+
+Select slt212=new Select(paymentmode);
+slt212.selectByVisibleText(pro.getProperty("PaymentType"));
+
+
+WebElement paymenttype = driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[7]/div[2]/select"));
+
+
+Actions action9= new Actions(driver);
+
+action9.moveToElement(paymenttype).click().build().perform();
+
+
+paymenttype.sendKeys(Keys.ARROW_DOWN);
+paymenttype.sendKeys(Keys.ENTER);
+
+
+Thread.sleep(1000);
+
+
+JavascriptExecutor js = (JavascriptExecutor) driver;  
+
+WebElement extrachargeamount = driver.findElement(By.xpath("//input[@type=\"text\"  and @name=\"extra_charge_amount\"]"));
+String actualtext = (String) js.executeScript("return arguments[0].value", extrachargeamount);;
+
+System.out.println(actualtext);
+
+String expectedtext= pro.getProperty("CancellationAmount");
+
+Assert.assertEquals(actualtext, expectedtext);
+
+
+String actualtext1=driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[8]")).getText();
+
+System.out.println(actualtext1);
+
+String expectedtext1= pro.getProperty("TotalChargeAmount");
+
+Assert.assertEquals(actualtext1, expectedtext1);
+
+paynow.click();
+
+
+try {
+	Thread.sleep(5000);
+String text61=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(text61);
+String exp61="Plan Changed successfully";
+Assert.assertEquals(text61,exp61);
+}
+catch(Exception e) {
+	e.printStackTrace();
+}
+}
+
+	
+@Test(priority=9)
+public void changePlanDetails() throws Exception {
+
+	 Thread.sleep(5000);
+	   
+     File src=new File("./src/main/java/com/wellness/qa/config/config.properties");
+	     	FileInputStream fis=new FileInputStream(src);
+	     	Properties pro=new  Properties();
+	     	pro=new Properties();
+	     	pro.load(fis);
+	     	
+	 driver.navigate().to("http://wellness.projectdemo.us/admin/dashboard");
+	 
+	 Thread.sleep(5000);
+	 
+Actions action3= new Actions(driver);
+	 
+action3.moveToElement(driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[6]/a"))).click().build().perform();
+
+Thread.sleep(5000);
+
+
+driver.findElement(By.xpath("//table[1]/tbody[1]/tr[1]/td[7]/a[1]")).click();
+
+Thread.sleep(5000);
+	
+Actions action4= new Actions(driver);
+
+action4.moveToElement(driver.findElement(By.xpath("//button[contains(text(),'Payment History')]"))).click().build().perform();
+
+
+
+List<WebElement>	PaymentHistory= driver.findElements(By.xpath("//*[@id=\"first-table\"]/thead"));
+for(WebElement el6: PaymentHistory) {
+	System.out.println(el6.getText());
+}
+	
+	
+List<WebElement>	rowdata= driver.findElements(By.xpath("//*[@id=\"first-table\"]/tbody/tr[1]"));
+for(WebElement el7: rowdata) {
+	System.out.println(el7.getText());
+//	if(el7.getText().equals(pro.getProperty("TransactionType1"))) {
+//		Boolean	status6=true;
+//			break;
+//		}	
+	
+}	   
+
+	  }
+
+
+
+	
+@Test(priority=10)
+public void cancelSubscription() throws Exception {
+ 
+ 	   Thread.sleep(5000);
+ 	   
+       File src=new File("./src/main/java/com/wellness/qa/config/config.properties");
+	     	FileInputStream fis=new FileInputStream(src);
+	     	Properties pro=new  Properties();
+	     	pro=new Properties();
+	     	pro.load(fis);
+	     	
+	 driver.navigate().to("http://wellness.projectdemo.us/admin/dashboard");
+	 
+	 Thread.sleep(5000);
+	 
+Actions action3= new Actions(driver);
+	 
+action3.moveToElement(driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[6]/a"))).click().build().perform();
+
+Thread.sleep(5000);
+
+
+driver.findElement(By.xpath("//table[1]/tbody[1]/tr[1]/td[7]/a[1]")).click();
+
+Thread.sleep(5000);
+
+Actions action4= new Actions(driver);
+
+action4.moveToElement(driver.findElement(By.xpath("//*[@id=\"PlanDetails\"]/div[1]/div/a[contains(text(),'Cancel Subscription')]"))).click().build().perform();
+
+Thread.sleep(2000);
+
+String actual= "Cancel Subscription";
+		String expected=driver.findElement(By.xpath("//h3[contains(text(),'Cancel Subscription')]")).getText();
+		System.out.println(expected);
+		Assert.assertEquals(actual, expected);
+		
+		
+WebElement paynow= driver.findElement(By.xpath("//button[1]/span[contains(text(),'Pay Now')]"));
+		
+Actions action6= new Actions(driver);
+
+action6.moveToElement(paynow).click().build().perform();
+
+Thread.sleep(2000);
+String actual2= "Note is required!!";
+String expected2=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(expected2);
+Assert.assertEquals(actual2, expected2);
+
+
+Thread.sleep(1000);
+
+WebElement textarea= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[2]/div/textarea"));
+
+Actions action7= new Actions(driver);
+
+action7.moveToElement(textarea).click().build().perform();
+
+
+textarea.sendKeys(pro.getProperty("Features3"));
+
+
+action6.moveToElement(paynow).click().build().perform();
+
+Thread.sleep(2000);
+String actual10= "Payment Mode is required!!";
+String expected10=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(expected10);
+Assert.assertEquals(actual10, expected10);
+
+Thread.sleep(1000);
+
+WebElement paymentmode = driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/p-sidebar[2]/div/div/div/div[3]/div[1]/select"));
+
+Actions action8 = new Actions(driver);
+
+action8.moveToElement(paymentmode).click().build().perform();
+
+Select slt212=new Select(paymentmode);
+slt212.selectByVisibleText(pro.getProperty("PaymentType2"));
+
+Thread.sleep(1000);
+
+
+JavascriptExecutor js = (JavascriptExecutor) driver;  
+
+WebElement inpElement = driver.findElement(By.xpath("//input[@type=\"text\"  and @name=\"extra_charge_amount\"]"));
+String actualtext = (String) js.executeScript("return arguments[0].value", inpElement);;
+
+System.out.println(actualtext);
+
+String expectedtext= pro.getProperty("CancelAmount");
+
+Assert.assertEquals(actualtext, expectedtext);
+
+paynow.click();
+
+
+try {
+	Thread.sleep(5000);
+String text61=driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div/div[1]/div[1]")).getText();
+System.out.println(text61);
+String exp61="Plan canceled successfully";
+Assert.assertEquals(text61,exp61);
+}
+catch(Exception e) {
+	e.printStackTrace();
+}
+}
+
+
+@Test(priority=11)
+public void cancelledReport() throws Exception {
+ 
+ 	   Thread.sleep(5000);
+ 	   
+       File src=new File("./src/main/java/com/wellness/qa/config/config.properties");
+	     	FileInputStream fis=new FileInputStream(src);
+	     	Properties pro=new  Properties();
+	     	pro=new Properties();
+	     	pro.load(fis);
+	     	
+	 driver.navigate().to("http://wellness.projectdemo.us/admin/dashboard");
+	 
+	 Thread.sleep(5000);
+	 
+	 WebElement element = driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[30]/a/span[contains(text(),'Reports')]"));
+	 ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	 
+	 element.click();
+	 
+
+Thread.sleep(2000);
+
+
+driver.findElement(By.xpath("//*[@id=\"sidebarnav\"]/li[30]/ul/li[1]/a/span[contains(text(),'Payment Report')]")).click();
+
+Thread.sleep(5000);
+
+
+
+Actions action4= new Actions(driver);
+
+action4.moveToElement(driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[1]/div/input"))).click().build().perform();
+
+
+Thread.sleep(2000);
+
+List<WebElement> lst=	driver.findElements(By.xpath("//div[@class=\"md-drppicker drops-down-right ltr shown double show-ranges\"]/div/ul/li"));
+
+for(WebElement el: lst) {
+	Thread.sleep(2000);
+	lst.get(3).click();
+	break;
+}
+	
+Thread.sleep(2000);
+
+WebElement action= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[2]/div/select"));
+
+action.click();
+
+Select slt=new Select(action);
+slt.selectByVisibleText(pro.getProperty("Action"));
+
+
+Thread.sleep(2000);
+
+WebElement transactionmode= driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[3]/select"));
+
+transactionmode.click();
+
+Select slt1=new Select(transactionmode);
+slt1.selectByVisibleText(pro.getProperty("TransactionMode"));
+
+
+Thread.sleep(2000);
+
+driver.findElement(By.xpath("//*[@id=\"main-wrapper\"]/div/div/ng-component/div/div/div/div/div[1]/div[4]/button[2]")).click();
+
+
+((JavascriptExecutor) driver).executeScript("window.scrollBy(0,500)");
+
+} 
+
 }

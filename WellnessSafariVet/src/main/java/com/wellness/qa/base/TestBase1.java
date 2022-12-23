@@ -17,6 +17,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -40,7 +41,7 @@ public class TestBase1 {
 	public static  WebDriver driver;
  public static Properties pro;
 
-
+ @Test
 public  static void initialization1() throws Exception {
 	File src=new File("./src/main/java/com/wellness/qa/config/config.properties");
 	FileInputStream fis=new FileInputStream(src);
@@ -49,9 +50,53 @@ public  static void initialization1() throws Exception {
 	pro.load(fis);
 	System.setProperty("webdriver.chrome.driver","./Driver/chromedriver.exe"); 
 	driver=new ChromeDriver();
+	  driver.manage().window().maximize();
+	    driver.get("https://maps-app.demoserver.biz/");
+	    Thread.sleep(5000); 
+	    driver.findElement(By.xpath("//input[@id='email']")).sendKeys("info@mapsapp.com");
+	    driver.findElement(By.xpath("//input[@id='password']")).sendKeys("123456789");
+	    //driver.findElement(By.xpath("//*[@id=\"login_form\"]/div[3]/div/label/input")).click();
+ driver.findElement(By.xpath("//button[@id='login-btn']")).click() ;
+ Thread.sleep(5000);
+ driver.get("https://maps-app.demoserver.biz/company/clients");
+ Thread.sleep(2000);
+ driver.findElement(By.xpath("//span[contains(text(),'Add Client')]")).click() ;
+	     
+ Thread.sleep(5000);
+ driver.findElement(By.xpath("//*[@id=\"select2-business-state-container\"]/span")).click() ;
+
+ 
+ driver.findElement(By.xpath("/html/body/span/span/span[1]/input")).sendKeys("a");
+ Thread.sleep(2000);
+ 
+ driver.findElement(By.xpath("//ul[@id=\"select2-business-state-results\"]/li[contains(text(),'Alabama')]")).click();
+ 
+ 
+ 
+ 
+ WebElement element = driver.findElement(By.xpath("/html/body/span/span/span[1]/input"));
+ ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+
+ 
+ 
+ Thread.sleep(1000);
+
+ element.sendKeys("california");			  
+		  Thread.sleep(2000);
+		  element.sendKeys(Keys.ARROW_DOWN.ENTER);
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+	  /*
 	  driver.get(pro.getProperty("URL"));
 	  driver.manage().window().maximize();
-	  driver.manage().deleteAllCookies();
+	  driver.manage().deleteAllCookies(); 
 	  String actualTitle=driver.getTitle();
 	  String expectedTitle=pro.getProperty("Pagetitle");
 	  assertEquals(actualTitle, expectedTitle);
@@ -162,9 +207,11 @@ driver.findElement(By.xpath("//button/span[contains(text(),'Log In')]")).click()
 //Thread.sleep(2000);
 //
 //driver.findElement(By.xpath("//a[contains(text(),'Logout')]")).click();
+ * */
 
 }
 
+/*
 
 public static void doSelectByVisbleValue(WebElement elt, String value) {
 	  Select slt=new Select(elt);
@@ -208,7 +255,20 @@ public static String getScreenshotPath(String TestCaseName, WebDriver driver) th
 		
 		
 }
-
+*/
+public static String getScreenshotPath(String TestCaseName, WebDriver driver) throws Exception {
+	//WebDriver driver1 = new ChromeDriver();
+	 File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+   String despath=System.getProperty("user.dir")+"/Reports/"+TestCaseName+".png";
+	   File file= new File(despath); 
+	    FileUtils.copyFile(source,file);
+	  byte[] imagebytes=  IOUtils.toByteArray(new FileInputStream(despath));
+	 return Base64.getEncoder().encodeToString(imagebytes);
+	 
+	// return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+		
+		
+}
 
 }
 
